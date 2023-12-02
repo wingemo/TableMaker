@@ -95,4 +95,3 @@ if __name__ == "__main__":
     except Exception as e:
         # Logga ett generellt felmeddelande om något går fel
         logger.exception(f"An unexpected error occurred: {e}")
-        print(f"Error: {e}")
