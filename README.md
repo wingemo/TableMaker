@@ -34,7 +34,7 @@ The Table Maker Program is a Python utility designed to create stylish text-base
 3. **Create and Print the Table:**
 
     ```python
-    tablemaker.create_stylish_table(data)
+    tablemaker.create_table(data)
     ```
 
     <table>
