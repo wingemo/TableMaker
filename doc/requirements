@@ -1,0 +1,59 @@
+Table Maker Program - Requirements Specification
+
+1. Introduction
+1.1 Purpose
+
+The purpose of this program is to create aesthetically pleasing text-based tables from given tabular data.
+
+1.2 Scope
+
+The program will allow users to create tables by submitting tabular data to the create_stylish_table function.
+
+2. Functional Requirements
+2.1 Create Table
+
+Users should be able to create a stylish text-based table by submitting tabular data to the create_stylish_table function.
+
+2.2 Column Width Adjustment
+
+Tables should have automatic column width adjustment to ensure consistent and aesthetic data presentation.
+
+2.3 Error Handling
+
+The program should handle incorrect input and provide clear error messages, such as for invalid data formats.
+
+3. Non-functional Requirements
+3.1 Performance
+
+The program should effectively handle tabular data with up to 100 rows and 10 columns.
+
+3.2 User-Friendliness
+
+Interaction with the program should be simple and user-friendly. It should be easy to integrate into other programs through importing.
+
+3.3 Modularity
+
+The program should be modular and divided into reusable functions for easy maintenance and extension.
+
+3.4 Testability
+
+There should be the capability to run and create automated tests for the create_stylish_table function. Test results should be reported and can be saved in a specified folder.
+
+4. Example
+To create a table, the following can be used:
+
+python
+Copy code
+import tablemaker
+
+data = [
+    ["Name", "Age", "City"],
+    ["John Doe", 28, "NY"],
+    ["Jane Smith", 35, "LA"],
+    ["Bob Johnson", 42, "SF"]
+]
+
+tablemaker.create(data)
+The result should be a stylish text-based table printed in the terminal.
+
+This requirements specification aims to provide an overarching guide for the development of the table maker program. Additional details and specifications can be added as needed to cover different scenarios and use cases.
