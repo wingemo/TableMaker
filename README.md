@@ -6,16 +6,7 @@ The Table Maker Program is a Python utility designed to create stylish text-base
 
 ## Features
 
-- **Create Stylish Tables:** Utilize the `create_stylish_table` function to generate visually appealing text-based tables.
-
-+-------------+-----+-----------------+
-| Name        | Age | City            |
-+-------------+-----+-----------------+
-| John Doe    | 30  | New York        |
-| Jane Smith  | 25  | San Francisco   |
-| Bob Johnson | 35  | Los Angeles     |
-+-------------+-----+-----------------+
-
+- **Create Stylish Tables:** Utilize the `create_stylish_table` function to generate visually appealing text-based tables
   
 - **Automatic Column Width Adjustment:** Ensure consistent and aesthetic presentation of data with automatic column width adjustment.
 
