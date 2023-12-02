@@ -1,4 +1,18 @@
 import argparse
+import logging
+
+# Skapa en rotloggare om ingen annan logger skickas in
+logger = logging.getLogger(__name__)
+
+def configure_logging(log_level):
+    # Konfigurera loggning för rotloggaren om ingen annan logger skickas in
+    if not logger.hasHandlers():
+        logger.setLevel(log_level)
+        console_handler = logging.StreamHandler()
+        console_handler.setLevel(log_level)
+        formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
+        console_handler.setFormatter(formatter)
+        logger.addHandler(console_handler)
 
 def calculate_column_widths(data):
     columns = len(data[0])
@@ -40,9 +54,14 @@ def create_stylish_table(data):
         table_output += generate_data_rows(data, column_widths)
         table_output += generate_bottom_border(column_widths)
 
+        # Logga att tabellen har skapats framgångsrikt
+        logger.info("Stylish table created successfully.")
+
         return table_output
 
     except ValueError as e:
+        # Logga ett felmeddelande om ogiltig inmatning
+        logger.error(f"Error: {e}")
         return str(e)
 
 if __name__ == "__main__":
@@ -52,12 +71,19 @@ if __name__ == "__main__":
         epilog="Example: python script.py 'Name Age City' 'John Doe 30 New York' 'Jane Smith 25 San Francisco' 'Bob Johnson 35 Los Angeles'"
     )
 
-    # Lägg till ett argument för listan
+    # Lägg till argument för listan och loggnivå
     parser.add_argument("data", nargs="+", help="Input data for the table in the format 'item1 item2 ...'.")
+    parser.add_argument("--log_level", default="INFO", help="Log level (DEBUG, INFO, WARNING, ERROR, CRITICAL).")
 
     try:
         # Analysera kommandoradsargumenten
         args = parser.parse_args()
+
+        # Konfigurera loggning med användarens valda loggnivå
+        log_level = getattr(logging, args.log_level.upper(), None)
+        if not isinstance(log_level, int):
+            raise ValueError("Invalid log level. Please choose one of: DEBUG, INFO, WARNING, ERROR, CRITICAL.")
+        configure_logging(log_level)
 
         # Omvandla inmatade strängar till listor
         input_data = [arg.split() for arg in args.data]
@@ -67,4 +93,6 @@ if __name__ == "__main__":
         print(stylish_table)
 
     except Exception as e:
+        # Logga ett generellt felmeddelande om något går fel
+        logger.exception(f"An unexpected error occurred: {e}")
         print(f"Error: {e}")
