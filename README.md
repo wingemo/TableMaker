@@ -1,4 +1,5 @@
 # Table Maker Program
+Create stylish text-based tables printed in the terminal from tabular data.
 
 ## Introduction
 
