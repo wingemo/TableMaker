@@ -1,10 +1,11 @@
 import argparse
 import logging
 
-# Skapa en rotloggare om ingen annan logger skickas in
-logger = logging.getLogger(__name__)
+def configure_logging(log_level, logger=None):
+    # Skapa en ny logger om ingen logger skickas in
+    if logger is None:
+        logger = logging.getLogger(__name__)
 
-def configure_logging(log_level):
     # Konfigurera loggning för rotloggaren om ingen annan logger skickas in
     if not logger.hasHandlers():
         logger.setLevel(log_level)
@@ -13,6 +14,8 @@ def configure_logging(log_level):
         formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
         console_handler.setFormatter(formatter)
         logger.addHandler(console_handler)
+
+    return logger
 
 def calculate_column_widths(data):
     columns = len(data[0])
@@ -37,8 +40,12 @@ def generate_data_rows(data, column_widths):
 def generate_bottom_border(column_widths):
     return generate_top_border(column_widths)
 
-def create_stylish_table(data):
+def create_stylish_table(data, logger=None):
     try:
+        # Använd den inkommande loggern om den har skickats in, annars skapa en ny
+        if logger is None:
+            logger = configure_logging(logging.INFO)
+
         # Validate input data
         if not isinstance(data, list) or not data:
             raise ValueError("Invalid input: Please provide a non-empty list of lists.")
@@ -79,19 +86,16 @@ if __name__ == "__main__":
         # Analysera kommandoradsargumenten
         args = parser.parse_args()
 
-        # Konfigurera loggning med användarens valda loggnivå
-        log_level = getattr(logging, args.log_level.upper(), None)
-        if not isinstance(log_level, int):
-            raise ValueError("Invalid log level. Please choose one of: DEBUG, INFO, WARNING, ERROR, CRITICAL.")
-        configure_logging(log_level)
+        # Konfigurera loggning med användarens valda loggnivå och skicka in loggern som parameter
+        main_logger = configure_logging(getattr(logging, args.log_level.upper(), None))
 
         # Omvandla inmatade strängar till listor
         input_data = [arg.split() for arg in args.data]
 
-        # Anropa funktionen med den omvandlade listan
-        stylish_table = create_stylish_table(input_data)
+        # Anropa funktionen med den omvandlade listan och loggern
+        stylish_table = create_stylish_table(input_data, logger=main_logger)
         print(stylish_table)
 
     except Exception as e:
         # Logga ett generellt felmeddelande om något går fel
-        logger.exception(f"An unexpected error occurred: {e}")
+        main_logger.exception(f"An unexpected error occurred: {e}")
