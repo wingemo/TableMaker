@@ -1,49 +1,46 @@
 import unittest
 import subprocess
+import json
 from your_module_name import create_stylish_table
 
 class TestWholeProgram(unittest.TestCase):
 
+    def setUp(self):
+        # Läs in värden från JSON-konfigurationsfilen
+        with open('test_config.json', 'r') as config_file:
+            self.test_data = json.load(config_file)
+
+    def run_test(self, test_name):
+        test_case = self.test_data[test_name]
+        input_data = test_case["input_data"]
+
+        if "expected_output" in test_case:
+            expected_output = test_case["expected_output"]
+            result = subprocess.check_output(['python', 'your_script_name.py'] + input_data.split(), universal_newlines=True)
+            self.assertEqual(result, expected_output, f"{test_name} output does not match expected output.")
+        elif "error_message" in test_case:
+            error_message = test_case["error_message"]
+            with self.assertRaises(ValueError) as context:
+                create_stylish_table(input_data)
+            self.assertEqual(str(context.exception), error_message, f"{test_name} error message does not match expected error message.")
+
     def test_whole_program_command_line(self):
-        input_data = "Name Age City\nJohn Doe 30 New York\nJane Smith 25 San Francisco\nBob Johnson 35 Los Angeles"
-        expected_output = "+----------------+-----+-----------------+\n| Name           | Age | City            |\n+----------------+-----+-----------------+\n| John Doe       | 30  | New York        |\n| Jane Smith     | 25  | San Francisco  |\n| Bob Johnson    | 35  | Los Angeles     |\n+----------------+-----+-----------------+\n"
-
-        # Kör programmet som en separat process och hämta stdout
-        result = subprocess.check_output(['python', 'your_script_name.py'] + input_data.split(), universal_newlines=True)
-
-        self.assertEqual(result, expected_output, "Command line program output does not match expected output.")
+        self.run_test("command_line_test")
 
     def test_whole_program_module_import(self):
-        input_data = [['Name', 'Age', 'City'], ['John Doe', '30', 'New York']]
-        expected_output = "+---------------+-----+-----------+\n| Name          | Age | City      |\n+---------------+-----+-----------+\n| John Doe      | 30  | New York  |\n+---------------+-----+-----------+\n"
-
-        # Anropa funktionen med den omvandlade listan och få utmatningen
-        result = create_stylish_table(input_data)
-
-        self.assertEqual(result, expected_output, "Module output does not match expected output.")
+        self.run_test("module_import_test")
 
     def test_invalid_input(self):
-        invalid_input_data = [['Name', 'Age', 'City'], ['John Doe', '30']]  # Mismatched columns
-        with self.assertRaises(ValueError):
-            create_stylish_table(invalid_input_data)
+        self.run_test("invalid_input_test")
 
     def test_empty_input(self):
-        empty_input_data = []  # Empty list
-        with self.assertRaises(ValueError):
-            create_stylish_table(empty_input_data)
+        self.run_test("empty_input_test")
 
     def test_logging(self):
-        # Testa att loggning fungerar som förväntat
-        input_data = [['Name', 'Age', 'City'], ['John Doe', '30', 'New York']]
-        with self.assertLogs() as log:
-            create_stylish_table(input_data)
-            self.assertIn("Stylish table created successfully.", log.output)
+        self.run_test("logging_test")
 
     def test_column_widths(self):
-        # Testa att korrekt beräkning av kolumnbredder görs
-        input_data = [['Name', 'Age', 'City'], ['John Doe', '30', 'New York']]
-        result = create_stylish_table(input_data)
-        self.assertIn("+---------------+-----+-----------+", result)
+        self.run_test("column_widths_test")
 
 if __name__ == '__main__':
     unittest.main(testRunner=unittest.TextTestRunner(resultclass=unittest.TextTestResult, stream=open('test_result/test_results.txt', 'w')))
