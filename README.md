@@ -2,7 +2,7 @@
 
 ## Introduction
 
-The Table Maker Program is a Python utility designed to create stylish text-based tables in terminal from tabular data. This simple yet effective tool allows users to generate aesthetically pleasing tables with automatic column width adjustment.
+The Table Maker Program is a Python utility designed to create stylish text-based tables printed in terminal from tabular data. This simple yet effective tool allows users to generate aesthetically pleasing tables with automatic column width adjustment.
 
 ## Features
 
