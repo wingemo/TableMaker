@@ -35,3 +35,16 @@ def create_stylish_table(data):
 
     except ValueError as e:
         return str(e)
+
+if __name__ == "__main__":
+    # Exempeldata för att testa funktionen
+    example_data = [
+        ["Name", "Age", "City"],
+        ["John Doe", 30, "New York"],
+        ["Jane Smith", 25, "San Francisco"],
+        ["Bob Johnson", 35, "Los Angeles"]
+    ]
+
+    # Anropa funktionen och skriv ut resultatet
+    stylish_table = create_stylish_table(example_data)
+    print(stylish_table)
