@@ -37,11 +37,28 @@ The Table Maker Program is a Python utility designed to create stylish text-base
     tablemaker.create_stylish_table(data)
     ```
 
-    | Name        | Age | City            |
-|-------------|-----|-----------------|
-| John Doe    | 30  | New York        |
-| Jane Smith  | 25  | San Francisco   |
-| Bob Johnson | 35  | Los Angeles     |
+    <table>
+  <tr>
+    <th>Name</th>
+    <th>Age</th>
+    <th>City</th>
+  </tr>
+  <tr>
+    <td>John Doe</td>
+    <td>30</td>
+    <td>New York</td>
+  </tr>
+  <tr>
+    <td>Jane Smith</td>
+    <td>25</td>
+    <td>San Francisco</td>
+  </tr>
+  <tr>
+    <td>Bob Johnson</td>
+    <td>35</td>
+    <td>Los Angeles</td>
+  </tr>
+</table>
 
 
 ## Installation
