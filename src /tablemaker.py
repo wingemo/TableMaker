@@ -37,14 +37,25 @@ def create_stylish_table(data):
         return str(e)
 
 if __name__ == "__main__":
-    # Exempeldata för att testa funktionen
-    example_data = [
-        ["Name", "Age", "City"],
-        ["John Doe", 30, "New York"],
-        ["Jane Smith", 25, "San Francisco"],
-        ["Bob Johnson", 35, "Los Angeles"]
-    ]
+    # Skapa en argumentparser med beskrivning och epilog för hjälpmeddelanden
+    parser = argparse.ArgumentParser(
+        description="Create a stylish table from input data.",
+        epilog="Example: python script.py '[Name, Age, City]' '[John Doe, 30, New York]' '[Jane Smith, 25, San Francisco]' '[Bob Johnson, 35, Los Angeles]'"
+    )
 
-    # Anropa funktionen och skriv ut resultatet
-    stylish_table = create_stylish_table(example_data)
-    print(stylish_table)
+    # Lägg till ett argument för listan
+    parser.add_argument("data", nargs="+", help="Input data for the table in the format [item1, item2, ...].")
+
+    try:
+        # Analysera kommandoradsargumenten
+        args = parser.parse_args()
+
+        # Omvandla inmatade strängar till listor
+        input_data = [eval(arg) for arg in args.data]
+
+        # Anropa funktionen med den omvandlade listan
+        stylish_table = create_stylish_table(input_data)
+        print(stylish_table)
+
+    except Exception as e:
+        print(f"Error: {e}")
