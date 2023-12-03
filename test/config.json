@@ -1,26 +1,29 @@
 {
-  "command_line_test": {
-    "input_data": "Name Age City\nJohn Doe 30 New York\nJane Smith 25 San Francisco\nBob Johnson 35 Los Angeles",
-    "expected_output": "+----------------+-----+-----------------+\n| Name           | Age | City            |\n+----------------+-----+-----------------+\n| John Doe       | 30  | New York        |\n| Jane Smith     | 25  | San Francisco  |\n| Bob Johnson    | 35  | Los Angeles     |\n+----------------+-----+-----------------+\n"
-  },
-  "module_import_test": {
-    "input_data": [["Name", "Age", "City"], ["John Doe", "30", "New York"]],
-    "expected_output": "+---------------+-----+-----------+\n| Name          | Age | City      |\n+---------------+-----+-----------+\n| John Doe      | 30  | New York  |\n+---------------+-----+-----------+\n"
-  },
-  "invalid_input_test": {
-    "input_data": [["Name", "Age", "City"], ["John Doe", "30"]],
-    "error_message": "Mismatched columns"
-  },
-  "empty_input_test": {
-    "input_data": [],
-    "error_message": "Empty list"
-  },
-  "logging_test": {
-    "input_data": [["Name", "Age", "City"], ["John Doe", "30", "New York"]],
-    "expected_output": "+---------------+-----+-----------+\n| Name          | Age | City      |\n+---------------+-----+-----------+\n| John Doe      | 30  | New York  |\n+---------------+-----+-----------+\n"
-  },
-  "column_widths_test": {
-    "input_data": [["Name", "Age", "City"], ["John Doe", "30", "New York"]],
-    "expected_output": "+---------------+-----+-----------+\n| Name          | Age | City      |\n+---------------+-----+-----------+\n| John Doe      | 30  | New York  |\n+---------------+-----+-----------+\n"
-  }
+  "tests": [
+    {
+      "name": "command_line_test",
+      "input_data": "Name Age City\nJohn Doe 30 New York\nJane Smith 25 San Francisco\nBob Johnson 35 Los Angeles",
+      "expected_output": "+----------------+-----+-----------------+\n| Name           | Age | City            |\n+----------------+-----+-----------------+\n| John Doe       | 30  | New York        |\n| Jane Smith     | 25  | San Francisco  |\n| Bob Johnson    | 35  | Los Angeles     |\n+----------------+-----+-----------------+\n"
+    },
+    {
+      "name": "module_import_test",
+      "input_data": [["Name", "Age", "City"], ["John Doe", "30", "New York"]],
+      "expected_output": "+---------------+-----+-----------+\n| Name          | Age | City      |\n+---------------+-----+-----------+\n| John Doe      | 30  | New York  |\n+---------------+-----+-----------+\n"
+    },
+    {
+      "name": "invalid_input_test",
+      "input_data": [["Name", "Age", "City"], ["John Doe", "30"]],
+      "error_message": "Mismatched columns"
+    },
+    {
+      "name": "empty_input_test",
+      "input_data": [],
+      "error_message": "Empty list"
+    },
+    {
+      "name": "logging_test",
+      "input_data": [["Name", "Age", "City"], ["John Doe", "30", "New York"]],
+      "log_message": "Stylish table created successfully."
+    }
+  ]
 }
